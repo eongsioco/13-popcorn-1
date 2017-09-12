@@ -33,5 +33,12 @@ docker push eongsioco/popcorn:$BUILD_NUMBER
 '''
       }
     }
+    
+    stage('deply to k8s') {
+      steps {
+        sh '''envsubst < deployment.yaml | kubectl apply -f -
+'''
+      }
+    }
   }
 }
