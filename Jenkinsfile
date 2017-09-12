@@ -14,10 +14,18 @@ pipeline {
     }
     stage('build docker') {
       steps {
-        sh '''docker build -t chyld/popcorn:$BUILD_NUMBER .
+        sh '''docker build -t eongsioco/popcorn:$BUILD_NUMBER .
 '''
       }
     }
+  
+     stage('testing') {
+      steps {
+        sh '''docker run -t eongsioco/popcorn:$BUILD_NUMBER rails test
+'''
+      }
+    }  
+  
     stage('docker push') {
       steps {
         sh '''docker login -u eongsioco -p $DOCKER_PASSWORD
